@@ -1,6 +1,6 @@
-# PART 1
+# PART 1 of Day 01
 
-# Otevírá a čte ze souboru, kde jsou data a ty ukládá do listu
+# Otevírá a čte ze souboru, kde jsou data a ty ukládá do listu po řádku
 with open("day01/large_data.txt", "r") as file:
     content = file.readlines()
 
@@ -11,6 +11,4 @@ for item in content:
     numbers = [char for char in item if char.isdigit()]
     total += int(numbers[0] + numbers[-1])  # Sečtění první a poslední číslice z položky dat a uložení do proměnné "total"
 
-print(total)
-
-# PART 2
+print(total)  # 55172

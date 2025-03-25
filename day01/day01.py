@@ -13,3 +13,6 @@ for item in content:
     total += int(numbers[0] + numbers[-1])  # Sečtění první a poslední číslice z položky dat a uložení do proměnné "total"
 
 print(f"Result of PART 1: {total}")  # 55172
+
+# PART 2 of Day 02
+# Později se k tomu vrátím

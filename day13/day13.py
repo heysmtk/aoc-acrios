@@ -13,6 +13,7 @@ def load_data(name_of_file):
 # Kontrolní výpis načtených vzorů (grids)
 patterns = load_data("day13/input_data.txt")
 print(f"Načteno: {len(patterns)} grids.")
+print("-------------------")
 
 
 def horizontal_line(pattern):
@@ -64,4 +65,56 @@ def calculation(patterns):
 # Výpočet výsledku
 patterns = load_data("day13/input_data.txt")
 score = calculation(patterns)
-print(f"Celkový výpočet je: {score}")
+print(f"Celkový výpočet P1: {score}")
+
+
+# ---PART TWO---
+
+
+def new_mirror(pattern, original_mirror, is_horizontal=True):
+    """
+    Změna každého znaku a nalezení nového zrcadlení.
+    original_mirror - původní linie, která bude ignorována!
+    is_horizontal - "True" hledá horizontální, "False" hledá vertikální
+    """
+    for i in range(len(pattern)):
+        for j in range(len(pattern[0])):
+            new_pattern = [list(row) for row in pattern]
+            new_pattern[i][j] = "#" if pattern[i][j] == "." else "."  # Přehození znaku
+            new_pattern = ["".join(row) for row in new_pattern]  # Převedení zpět do stringu
+            
+            # Hledání nového zrcadlení
+            if is_horizontal:
+                new_mirror = horizontal_line(new_pattern)
+            else:
+                new_mirror = vertical_line(new_pattern)
+                
+            # Vrácení nové linie (jiné než původní)
+            if new_mirror and new_mirror != original_mirror:
+                return new_mirror
+            
+    return None  # Pokud nenajde novou linii
+
+
+def calculation_part2(patterns):
+    """Nový výpočet pro part 2. Po kompetním přeskládání patternů."""
+    total_score = 0
+
+    for pattern in patterns:
+        original_h = horizontal_line(pattern)
+        original_v = vertical_line(pattern)
+
+        new_h = new_mirror(pattern, original_h, is_horizontal=True)
+        new_v = new_mirror(pattern, original_v, is_horizontal=False)
+
+        if new_h:
+            total_score += 100 * new_h
+        if new_v:
+            total_score += new_v
+
+    return total_score
+
+# Spočítáme skóre pro Part 2
+patterns = load_data("day13/input_data.txt")
+score_part2 = calculation_part2(patterns)
+print(f"Celkový výpočet P2: {score_part2}")
